@@ -9,7 +9,7 @@
 void SystemClock_Config(void);
 
 // Variables
-uint32_t prev_time = 0;
+static uint32_t prev_time = 0;
 
 int main(void)
 {
@@ -20,16 +20,20 @@ int main(void)
     SystemClock_Config();
 
     /* Initialize all configured peripherals */
-    MX_GPIO_Init();
+    LED_Init();
+    external_led_init(GPIO_PIN_1);
+    external_led_init(GPIO_PIN_2);
 
     /* Infinite Loop */
     while (1)
     {
-        if (HAL_GetTick() - prev_time >= 100)
+        if (HAL_GetTick() - prev_time >= 500)
         {
             prev_time = HAL_GetTick();
             /* Every 500ms blink */
             HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+            HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
+            HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_2);
         }
     }
 }

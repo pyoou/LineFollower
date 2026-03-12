@@ -4,7 +4,7 @@
 
 #include "gpio.h"
 
-void MX_GPIO_Init(void)
+void LED_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -23,7 +23,18 @@ void MX_GPIO_Init(void)
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
-void MX_GPIO_Toggle(void)
+void external_led_init(uint16_t GPIO_PIN_X)
 {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_X, GPIO_PIN_RESET);
+
+    // Configure GPIO PIN
+    GPIO_InitStruct.Pin = GPIO_PIN_X;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }

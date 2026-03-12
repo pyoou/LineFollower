@@ -11,7 +11,8 @@ extern "C" {
 
 #include "main.h"
 
-    void MX_GPIO_Init(void);
+    void LED_Init(void);
+    void external_led_init(uint16_t GPIO_PIN_X);
 
 #ifdef __cplusplus
 }
